@@ -34,7 +34,6 @@ export default {
   data() {
     return {
       urlGetList: "/getTodoList",
-      urlDeleteTodo: "/deleteTodo",
       list:[],
       listTodo: [],
       listFinished: [],

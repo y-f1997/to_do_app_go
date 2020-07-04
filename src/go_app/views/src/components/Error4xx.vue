@@ -23,6 +23,7 @@ export default {
         return response;
       },
       error => {
+        console.log(error)
          self.error = "<div class='alert alert-warning'>" + error.response.data.code + " :" + error.response.data.error + "</div>"
         return Promise.reject(error);
       }
