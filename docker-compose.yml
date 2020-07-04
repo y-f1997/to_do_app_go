@@ -5,6 +5,7 @@ services:
     container_name: go_vue_web
     ports: 
       - "5080:5080"
+      - "5081:5081"
     depends_on: 
       - db
     tty: true
