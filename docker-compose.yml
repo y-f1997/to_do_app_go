@@ -1,0 +1,18 @@
+version: "3"
+services: 
+  go:
+    build: .
+    container_name: go_vue_web
+    ports: 
+      - "5080:5080"
+    depends_on: 
+      - db
+    tty: true
+  db:
+    image: postgres:11.8
+    container_name: go_pg_db_todo
+    environment: 
+      POSTGRES_PASSWORD: 'password'
+
+
+  
