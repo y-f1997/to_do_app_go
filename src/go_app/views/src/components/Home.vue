@@ -29,16 +29,16 @@
           <th style="display: none;">更新日時</th>
         </thead>
         <tbody>
-        <tr v-for="whatDone in lists" v-bind:key="whatDone.crtTimestamp" @click=routeDetail(whatDone) style="cursor:pointer;">
-          <td>{{convertDateFormat(whatDone.startDateTime)}}</td>
-          <td>{{convertDateFormat(whatDone.endDateTime)}}</td>
-          <td>{{whatDone.categoryRes}}</td>
-          <td>{{whatDone.whatDone}}</td>
+        <tr v-for="whatDone in lists" v-bind:key="whatDone.crtTimestamp" style="cursor:pointer;">
+          <td @click="routeDetail(whatDone)">{{convertDateFormat(whatDone.startDateTime)}}</td>
+          <td @click="routeDetail(whatDone)">{{convertDateFormat(whatDone.endDateTime)}}</td>
+          <td @click="routeDetail(whatDone)">{{whatDone.categoryRes}}</td>
+          <td @click="routeDetail(whatDone)">{{whatDone.whatDone}}</td>
           <!-- <td>{{whatDone.additionalInfo}}</td> -->
           <td>
             <font-awesome-icon icon="minus-circle" style="color: red;" @click="deleteWhatDone(whatDone)" />
           </td>
-          <td style="display: none" @click=deleteWhatDone(whatDone)>{{whatDone.crtTimestamp}}</td>
+          <td style="display: none">{{whatDone.crtTimestamp}}</td>
         </tr>
         </tbody>
       </table>

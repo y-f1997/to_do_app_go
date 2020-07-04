@@ -38,10 +38,11 @@ axios.interceptors.request.use(req => {
 
 axios.interceptors.response.use(
   response => {
+    console.log('res', response)
     return response;
   },
   error => {
-    console.log(error)
+    console.log('error',error)
     if (error.response.data.code == '401'){
       router.push({name:'Login'})
       return Promise.reject(error);

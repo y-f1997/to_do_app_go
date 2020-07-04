@@ -13,12 +13,12 @@
       <th style="display: none;">更新日時</th>
     </thead>
     <tbody>
-      <tr v-for="todo in todo_list" v-bind:key="todo.crtTimestamp" @click=routeDetail(todo) style="cursor:pointer;">
-        <td v-if="todo_status === 'todo'">{{convertDateFormat(todo.timeToBeDone)}}</td>
-        <td v-if="todo_status === 'fin'">{{convertDateFormat(todo.timeDone)}}</td>
-        <td :class="importanceColor(todo.importance)">{{todo.todoImportanceRes}}</td>
-        <td>{{todo.todoCategoryRes}}</td>
-        <td>{{todo.toDo}}</td>
+      <tr v-for="todo in todo_list" v-bind:key="todo.crtTimestamp" style="cursor:pointer;">
+        <td v-if="todo_status === 'todo'" @click="routeDetail(todo)">{{convertDateFormat(todo.timeToBeDone)}}</td>
+        <td v-if="todo_status === 'fin'" @click="routeDetail(todo)">{{convertDateFormat(todo.timeDone)}}</td>
+        <td :class="importanceColor(todo.importance)" @click="routeDetail(todo)">{{todo.todoImportanceRes}}</td>
+        <td @click="routeDetail(todo)">{{todo.todoCategoryRes}}</td>
+        <td @click="routeDetail(todo)">{{todo.toDo}}</td>
         <!-- <td>{{todo.additionalInfo}}</td> -->
         <td>
           <font-awesome-icon icon="minus-circle" style="color: red;" @click="deleteTodo(todo)" />
@@ -35,6 +35,11 @@
 import axios from 'axios';
 export default {
   props: ['todo_list', 'todo_status'],
+  data(){
+    return {
+      urlDeleteTodo: "/deleteTodo",
+    }
+  },
   methods: {
     convertDateFormat: function (date) {
       if (date === null){
@@ -78,7 +83,8 @@ export default {
       var self = this;
       axios.post(self.urlDeleteTodo, doc).then(function (res) {
         console.log(res);
-        self.getList();
+        // self.getList();
+        self.$router.go({path: self.$router.currentRoute.path, force: true});
       });
     },
     importanceColor: function(importance){

@@ -1,6 +1,6 @@
 module.exports = {
   devServer: {
-      port: 5443,
+      port: 5081,
       disableHostCheck: true,
       proxy: {
         '^/': { 
