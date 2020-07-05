@@ -5,6 +5,7 @@ type Constants struct {
 	TimeFormat        map[string]string
 	ClientNullTimeStr string
 	SecretKey         string
+	Location          string
 }
 
 var Consts Constants

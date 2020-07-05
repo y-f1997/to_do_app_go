@@ -91,13 +91,15 @@ func FindListByMonth(spanStart time.Time, spanEnd time.Time, cookieUserId string
 	var lists []WhatDoneDB
 	var resLists []WhatDoneRes
 	var err error
+	log.Printf("spanStart:%v", spanStart.Format(time.RFC3339))
+	log.Printf("spanStart:%v", spanEnd.Format(time.RFC3339))
 	if spanStart.Equal(spanEnd) {
 		log.Println(spanStart.Format(time.RFC3339))
 		where := map[string]interface{}{"spanStart": spanStart.Format(time.RFC3339), "UserId": cookieUserId}
 		// _, err = DbMap.Select(&lists, `SELECT * from what_done where date_trunc('day', start_date_time) = date_trunc('day', (timestamp :spanStart)) and user_id=:UserId; `, where)
-		_, err = DbMap.Select(&lists, `SELECT * from what_done where date(start_date_time) = date(:spanStart) and user_id=:UserId; `, where)
+		_, err = DbMap.Select(&lists, `SELECT * from what_done where date(start_date_time) = date(:spanStart) and user_id=:UserId ORDER BY start_date_time; `, where)
 	} else {
-		_, err = DbMap.Select(&lists, `select * from public.what_done where start_date_time BETWEEN date($1) and (date($2)+1) and user_id=$3;`, spanStart.Format(time.RFC3339), spanEnd.Format(time.RFC3339), cookieUserId)
+		_, err = DbMap.Select(&lists, `select * from public.what_done where start_date_time BETWEEN date($1) and (date($2)+1) and user_id=$3 ORDER BY end_date_time;`, spanStart.Format(time.RFC3339), spanEnd.Format(time.RFC3339), cookieUserId)
 	}
 	if err != nil {
 		log.Println(err)
