@@ -83,8 +83,7 @@ export default {
       var self = this;
       axios.post(self.urlDeleteTodo, doc).then(function (res) {
         console.log(res);
-        // self.getList();
-        self.$router.go({path: self.$router.currentRoute.path, force: true});
+        self.$emit('parent-get-list')
       });
     },
     importanceColor: function(importance){

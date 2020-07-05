@@ -13,10 +13,10 @@
       </div>
     </div>
     <div class="row">
-      <TodoTable :todo_list="listTodo" todo_status="todo"></TodoTable>
+      <TodoTable :todo_list="listTodo" todo_status="todo" @parent-get-list="getList"></TodoTable>
     </div>
     <div class="row">
-      <TodoTable :todo_list="listFinished" todo_status="fin"></TodoTable>
+      <TodoTable :todo_list="listFinished" todo_status="fin" @parent-get-list="getList"></TodoTable>
     </div>
 
   </div>
