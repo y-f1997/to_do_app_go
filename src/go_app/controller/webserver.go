@@ -135,6 +135,15 @@ func getTodo(w http.ResponseWriter, r *http.Request) {
 	w.Write(todoResJson)
 }
 
+func downloadCsv(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Disposition", "test.csv")
+	w.Header().Set("Content-Type", "text/csv")
+	out := []byte("test1,test2,test3")
+	// w.Header().Set("Content-Length", string(len(out)))
+	w.Write(out)
+
+}
+
 func insertToDo(w http.ResponseWriter, r *http.Request) {
 	if err := InsertTodoService(r); err != nil {
 		APIError(w, err)
@@ -192,6 +201,8 @@ func WebServer() {
 	http.Handle("/deleteTodo", apiMakeHandler(deleteTodo))
 	http.Handle("/getTodoList", apiMakeHandler(getToDoListByUserId))
 	http.Handle("/getTodo", apiMakeHandler(getTodo))
+
+	http.Handle("/downloadCsv", apiMakeHandler(downloadCsv))
 
 	http.Handle("/checkIsOnSession", apiMakeHandler(isOnSession))
 	http.HandleFunc("/login", apiMakeHandler(userLoginHandle))

@@ -1,8 +1,16 @@
 <template>
     <div class="container-fluid">
     <div class="row">
-      <div class="col-md-11">
+      <div class="col-md-10">
       </div>
+      <div class="col-md-1">
+      <h2 class="float-right">
+        <div @click="downLoadCsv()" style="color:blue; cursor:pointer">
+          <font-awesome-icon icon="file-alt" />
+        </div>
+      </h2>
+      </div>
+
       <div class="col-md-1">
       <h2 class="float-right">
         <div @click="routeDetail(null)" style="color:blue; cursor:pointer">
@@ -22,8 +30,8 @@
   </div>
 
 </template>
-
 <script>
+import saveAs from 'file-saver'
 import axios from 'axios';
 import TodoTable from './todo/TodoTable.vue'
 export default {
@@ -85,6 +93,16 @@ export default {
       }
       this.$router.push(to)
     },
+    downLoadCsv: function(){
+      axios.get("/downloadCsv").then(function(response){
+         let mimeType = response.headers['content-type']
+          const name = response.headers['content-disposition']
+          const data = response.data // サーバーサイド(goa)からのレスポンスに合わせている。
+          const bom = new Uint8Array([0xEF, 0xBB, 0xBF]) // Microsoft Excelでも見れるように、BOMを付与。
+          const blob = new Blob([bom, data], {type: mimeType})
+          saveAs(blob, name)
+      })
+    }
   }
 
 }
